@@ -24,6 +24,15 @@
 										required
 									></v-text-field>
 								</v-col>
+								<v-col class="d-flex" cols="12" sm="6">
+									<v-select
+										v-model="priority"
+										:items="priorities"
+										label="Select Priority"
+										outlined
+										required
+									></v-select>
+								</v-col>
 								<v-col cols="12">
 									<v-textarea
 										v-model="newTaskDescription"
@@ -32,6 +41,7 @@
 										name="input-7-4"
 										label="Task Description"
 										value=""
+										required
 									></v-textarea>
 								</v-col>
 							</v-row>
@@ -55,23 +65,31 @@
 	export default {
 		name: 'NewTasks',
 		data: () => ({
+			priorities: ['High', 'Medium', 'Low'],
 			dialog: false,
-      newTaskTitle: '',
-      newTaskDescription: ''
+			newTaskTitle: '',
+			newTaskDescription: '',
+			priority: '',
+			rules: {
+      select: [(v) => !!v || "Item is required"],
+      select2: [(v) =>  v.length>0 || "Item is required in select 2"],
+    }
 		}),
 		methods: {
 			callAddNewTask: function () {
-        console.log('this.newTaskTitle', this.newTaskTitle)
-        let newTask = {
-          id: Date.now(),
-          title: this.newTaskTitle,
-          description: this.newTaskDescription,
-          done: false
-        }
+				let newTask = {
+					id: Date.now(),
+					title: this.newTaskTitle,
+					priority: this.priority,
+					description: this.newTaskDescription,
+					date: (new Date()).toLocaleDateString('en-GB'),
+					done: false,
+				}
 				this.$store.dispatch('addNewTask', newTask)
 				this.dialog = false
-        this.newTaskTitle = ''
-        this.newTaskDescription = ''
+				this.newTaskTitle = ''
+				this.newTaskDescription = ''
+				this.priority = ''
 			},
 		},
 	}

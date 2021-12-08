@@ -16,9 +16,11 @@
 				>
 					<v-list-item-title>{{ task.title }}</v-list-item-title>
 					<v-list-item-subtitle>{{ task.description }}</v-list-item-subtitle>
+					<v-list-item-subtitle>Priority: {{ task.priority }}</v-list-item-subtitle>
 				</v-list-item-content>
 
 				<v-list-item-action>
+					<v-list-item-subtitle>{{ task.date }}</v-list-item-subtitle>
 					<v-btn @click.stop="callDeleteTask(task.id)" icon>
 						<v-icon color="grey linghten-1">mdi-delete</v-icon>
 					</v-btn>
